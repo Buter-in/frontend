@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'Inter custom';
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: block;
+  font-named-instance: Regular;
+  src: url(https://app.uniswap.org/fonts/Inter-roman.var.woff2) format('woff2 supports variations(gvar)'), url(https://app.uniswap.org/fonts/Inter-roman.var.woff2) format('woff2-variations'), url(https://app.uniswap.org/fonts/Inter-roman.var.woff2) format('woff2')
+}
+
+@import url('https://fonts.googleapis.com/css2?family=Space+Mono&display=swap');
+
+@supports (font-variation-settings: normal) {
+  * {
+    font-family: 'Inter custom', sans-serif
+  }
+}
+
+html {
+  font-family: 'Inter custom', sans-serif;
+  font-variant-numeric: slashed-zero;
+  font-variant-numeric: stacked-fractions;
+  /* background-color: #8EC5FC; */
+  /* background-image: linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%); */
+
+}
+
+.search-btn {
+  background-color: #8EC5FC;
+  background-image: linear-gradient(62deg, #8EC5FC 30%, #E0C3FC 100%);
+}
+
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  width: 100%;
+  height: 50px;
+  font-size: 15px;
+  font-weight: bold;
+  color: #fff;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #101010;
+  border: 0;
+}
+
+#root {
+  width: 100%;
+  height: 100vh;
+}
+
+.App {
+  width: 100%;
+  height: 100%;
+}
+
+.graph>div {
+  width: 100%;
+  height: 100%;
+}
+
+.nft-template {
+  box-shadow: rgba(240, 45, 169, 0.4) -5px 5px, rgba(240, 46, 170, 0.3) -10px 10px, rgba(240, 46, 170, 0.2) -15px 15px, rgba(240, 46, 170, 0.1) -20px 20px, rgba(240, 46, 170, 0.05) -25px 25px;
+}
+
+input[type="search"]::-webkit-search-cancel-button{
+  margin: 2rem;
+}
+
+.graph-tooltip {
+  padding: 3rem;
+  background-color: white;
+  color: black;
+}
