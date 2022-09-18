@@ -2,6 +2,7 @@ import { ethers } from "ethers";
 import { message } from '../wrappers/web3'
 
 const collection = {
+    1: '0xacb6693625712cc47c318d5b5c0c0050b1b873e1',
     80001: '0x9fc7cbe0aebb56d1a9f01a79ecfa3c32032021ae',
 }
 const abiCollection = [

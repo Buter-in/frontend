@@ -35,7 +35,7 @@ export function PathResult() {
             if (network.chainId === 1 || network.chainId === 80001) {
                 console.log('ok')
             } else {
-                toast.info("We provide tokens only on mainnet", {
+                toast.info("We provide tokens only on Eth mainnet | Matic testnet", {
                     icon: '🚫',
                 })
                 throw 'We provide tokens only on mainnet'
