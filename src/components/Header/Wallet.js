@@ -15,9 +15,12 @@ export function Wallet() {
         setIsOpen(true)
     }
 
-    // useEffect(() => {
-    //     if (library)
-    // }, [account])
+    const netwotkMapping = {
+        'homestad': 'Eth Mainnet',
+        'bnbt': 'BSC Testnet',
+        'maticmum': 'Matic Testnet',
+    }
+
     return (
         <>
             {/* <Menu as="div" className="relative inline-block text-left pr-2">
@@ -33,7 +36,7 @@ export function Wallet() {
                         </span>
                         {!!account && (
                             <span className="text-gray-500 text-sm font-semibold">
-                                {truncateAddress(account, 5).replace('x', '×')} | {network?.name}
+                                {truncateAddress(account, 5).replace('x', '×')} | {netwotkMapping[network?.name] || 'unsupported'}
                             </span>
                         )}
                         {!account && (

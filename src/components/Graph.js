@@ -28,13 +28,30 @@ const templateData = {
     ]
 };
 
+const templateSad = {
+    nodes: [
+        { id: " 4", type: 'test' },
+        { id: "0", type: 'test' },
+        { id: "4 ", type: 'test' }
+    ],
+    links: [
+        { source: " 4", target: "0", value: 5 },
+        { source: "0", target: "4 ", value: 5 },
+    ]
+}
+
 const Graph = ({ width, height, fromToData, from, to }) => {
     const navigate = useNavigate()
     const forceRef = useRef(null);
     let data = []
 
     if (typeof fromToData !== 'undefined' && Object.keys(fromToData).length !== 0) {
-        data = JSON.parse(JSON.stringify(fromToData))
+        console.log('fromToData', fromToData.nodes)
+        if (fromToData.nodes.length === 0) {
+            data = templateSad
+        } else {
+            data = JSON.parse(JSON.stringify(fromToData))
+        }
     } else {
         data = templateData
     }

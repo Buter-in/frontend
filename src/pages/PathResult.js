@@ -30,11 +30,23 @@ export function PathResult() {
     const [balanceOf, setBalanceOf] = useState(0)
 
     const execute = async () => {
+        if (library) {
+            const network = await library.getNetwork();
+            if (network.chainId === 1 || network.chainId === 80001) {
+                console.log('ok')
+            } else {
+                toast.info("We provide tokens only on mainnet", {
+                    icon: '🚫',
+                })
+                throw 'We provide tokens only on mainnet'
+            }
+        }
+
         if (!account) {
             toast.info("Connect your wallet", {
                 icon: '🙃',
             })
-            return
+            throw 'Connect your wallet'
         }
 
         const nonce = await getNonce({ library })
@@ -42,7 +54,7 @@ export function PathResult() {
             toast.error("Token already minted", {
                 icon: '🚫',
             })
-            return
+            throw 'Token already minted'
         }
         const data = await getRequest({ from, to, nonce })
         console.log('request', data)
@@ -75,6 +87,17 @@ export function PathResult() {
                 icon: '🚫',
             })
         }
+    }
+
+    const wrapedExecute = () => {
+        toast.promise(
+            execute,
+            {
+                pending: 'Executing request',
+                success: 'Executed',
+                error: 'Error'
+            }
+        )
     }
 
     useEffect(() => {
@@ -153,13 +176,14 @@ export function PathResult() {
 
     useEffect(() => {
         const get = async () => {
-            if (library) {
-                const balance = await getBalanceOf({ library })
-                setBalanceOf(balance.toNumber())
-            }
+            const balance = await getBalanceOf({ library, address: account })
+            console.log('balance', balance)
+            setBalanceOf(balance.toNumber())
         }
-        get()
-    }, [library])
+        if (account) {
+            get()
+        }
+    }, [account])
 
     return (
         <div className="flex flex-col md:flex-row h-full overflow-scroll">

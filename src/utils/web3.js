@@ -3,11 +3,6 @@ import { message } from '../wrappers/web3'
 
 const collection = {
     80001: '0x9fc7cbe0aebb56d1a9f01a79ecfa3c32032021ae',
-    97: '0xcd14AD87f6FfEE29BF3F13d5F003Cc6402c87fEF'.toLowerCase()
-}
-const emitent = {
-    80001: '0xda32C0d780e780e6FcD1EF5d0d9e98A311F736f1',
-    97: '0xda32C0d780e780e6FcD1EF5d0d9e98A311F736f1',
 }
 const abiCollection = [
     "function getNonce(address account) public view returns (uint256)",
@@ -117,12 +112,10 @@ export async function getNonce({ library }) {
     return _nonce
 }
 
-export async function getBalanceOf({ library }) {
+export async function getBalanceOf({ library, address }) {
     const network = await library.getNetwork()
     const contract = new ethers.Contract(collection[network.chainId], abiCollection, library);
-    const _signer = library.getSigner();
-    const _signer_address = await _signer.getAddress()
-    const _balance = await contract.balanceOf(_signer_address);
+    const _balance = await contract.balanceOf(address);
 
     console.log(_balance)
     return _balance

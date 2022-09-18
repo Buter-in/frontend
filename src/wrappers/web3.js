@@ -3,17 +3,18 @@ import { useState, useEffect, createContext } from 'react';
 import Web3Modal from "web3modal";
 import { ethers } from "ethers";
 import { toHex } from '../utils/formatters';
+import { createCompany } from '../utils/api'
 
 export const networkParams = {
     "0x539": {
-        chainId: "0x539",
-        rpcUrls: ["http://localhost:8545"],
-        chainName: "HH",
-        nativeCurrency: { name: "ONE", decimals: 18, symbol: "ONE" },
-        blockExplorerUrls: ["https://explorer.harmony.one"],
-        iconUrls: ["https://harmonynews.one/wp-content/uploads/2019/11/slfdjs.png"]
+      chainId: "0x539",
+      rpcUrls: ["http://localhost:8545"],
+      chainName: "HH",
+      nativeCurrency: { name: "ONE", decimals: 18, symbol: "ONE" },
+      blockExplorerUrls: ["https://explorer.harmony.one"],
+      iconUrls: ["https://harmonynews.one/wp-content/uploads/2019/11/slfdjs.png"]
     },
-};
+  };
 
 const web3Modal = new Web3Modal({
     cacheProvider: true,
