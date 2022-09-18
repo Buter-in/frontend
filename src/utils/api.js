@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { message } from '../wrappers/web3'
 
 const TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYzYzZjQ4NmUtNzg3Yi00ZTNlLWI1YTMtNjE2MzFhZmZlNmU0IiwiYXVkIjpbImZhc3RhcGktdXNlcnM6YXV0aCIsImZhc3RhcGktdXNlcnM6dmVyaWZ5Il19.aksYMPh_YpZONn-EB2omwbPqtNxDOcv9F4dbG_5erAM'
 
@@ -37,4 +36,9 @@ const getNeibors = async ({ address }) => {
     })
 }
 
-export { getNodes, getNeibors }
+const getRequest = async ({ from, to, nonce }) => {
+    let res = await axios.post(`http://192.168.100.4:8000/sbt_emitent_signature?from_addr=${from}&to_addr=${to}&nonce=${nonce}`)
+    return res.data
+}
+
+export { getNodes, getNeibors, getRequest }

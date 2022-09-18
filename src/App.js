@@ -18,7 +18,7 @@ function App() {
             <Route path="/" element={<PathSearch />} />
             <Route path="/:from/:to" element={<PathResult />} />
           </Routes>
-          <ToastContainer />
+          <ToastContainer hideProgressBar={true}/>
         </Web3>
       </div>
     </Router>
