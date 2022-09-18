@@ -32,10 +32,10 @@ export function PathResult() {
     const execute = async () => {
         if (library) {
             const network = await library.getNetwork();
-            if (network.chainId === 1 || network.chainId === 80001) {
+            if (network.chainId === 1) {
                 console.log('ok')
             } else {
-                toast.info("We provide tokens only on Eth mainnet | Matic testnet", {
+                toast.info("We provide tokens only on Eth mainne", {
                     icon: '🚫',
                 })
                 throw 'We provide tokens only on mainnet'
