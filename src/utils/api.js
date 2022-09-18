@@ -37,7 +37,7 @@ const getNeibors = async ({ address }) => {
 }
 
 const getRequest = async ({ from, to, nonce }) => {
-    let res = await axios.post(`http://192.168.100.4:8000/sbt_emitent_signature?from_addr=${from}&to_addr=${to}&nonce=${nonce}`)
+    let res = await axios.post(`http://buterin.me:8000/sbt_emitent_signature?from_addr=${from}&to_addr=${to}&nonce=${nonce}`)
     return res.data
 }
 

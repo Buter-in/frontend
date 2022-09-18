@@ -9,7 +9,7 @@ export function PathSearch() {
             <div className="graph hidden md:flex flex-row w-full md:w-1/2 h-full" style={{ zIndex: 0 }}>
                 <ForceGraph />
             </div>
-            <div className="flex flex-col w-full md:w-1/2 h-full items-center justify-center overflow-scroll">
+            <div className="right-screen flex flex-col w-full md:w-1/2 h-full items-center justify-center overflow-scroll">
                 <Search />
             </div>
         </div>

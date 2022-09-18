@@ -15,6 +15,9 @@ export function Wallet() {
         setIsOpen(true)
     }
 
+    // useEffect(() => {
+    //     if (library)
+    // }, [account])
     return (
         <>
             {/* <Menu as="div" className="relative inline-block text-left pr-2">
@@ -30,7 +33,7 @@ export function Wallet() {
                         </span>
                         {!!account && (
                             <span className="text-gray-500 text-sm font-semibold">
-                                {truncateAddress(account, 5).replace('x', '×')}
+                                {truncateAddress(account, 5).replace('x', '×')} | {network?.name}
                             </span>
                         )}
                         {!account && (
@@ -112,15 +115,23 @@ export function Wallet() {
                                         </p>
                                     </div> */}
 
-                                    <div className="mt-4 flex justify-center">
+                                    <div className="mt-4 flex flex-col justify-center">
 
                                         {!account && (<button
                                             type="button"
                                             className="inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                             onClick={connectWallet}
                                         >
-                                            Connect Wallet
+                                            Connect Wallet via Metamask
                                         </button>)}
+
+                                        <button
+                                        onClick={closeModal}
+                                            type="button"
+                                            className="mt-3 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
+                                        >
+                                            Close modal
+                                        </button>
                                     </div>
                                 </Dialog.Panel>
                             </Transition.Child>

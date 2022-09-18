@@ -26,6 +26,7 @@ export function PathResult() {
     const { account, library } = useContext(Web3Context)
     const [fromToData, setFromToData] = useState({})
     const [fromExtToData, setExtFromToData] = useState(null)
+    const [isVitalik, setIsVitalik] = useState(false)
     const [balanceOf, setBalanceOf] = useState(0)
 
     const execute = async () => {
@@ -37,9 +38,18 @@ export function PathResult() {
         }
 
         const nonce = await getNonce({ library })
+        if (nonce > 0) {
+            toast.error("Token already minted", {
+                icon: '🚫',
+            })
+            return
+        }
         const data = await getRequest({ from, to, nonce })
+        console.log('request', data)
         const isValid = await verifyRequest({ library, message: data.message.message, signature: data.signed.signature })
+
         console.log(isValid)
+
         if (isValid) {
             if (data.message.message.to !== account.toLowerCase()) {
                 toast.error("You are not the receiver of this request", {
@@ -71,8 +81,6 @@ export function PathResult() {
         const get = async () => {
             let nodes = [];
             let links = [];
-
-            // await getBalanceOf({library})
 
             try {
                 const rawNodes = await getNodes({
@@ -132,8 +140,26 @@ export function PathResult() {
             setExtFromToData({ nodes: extNodes, links: extLinks })
         }
 
+        if (to !== '0xd8da6bf26964af9d7eed9e03e53415d37aa96045') {
+            toast.info("You can mint SB token only for Vitalik", {
+                icon: '🙃',
+            })
+        } else {
+            setIsVitalik(true)
+        }
+
         get()
     }, [])
+
+    useEffect(() => {
+        const get = async () => {
+            if (library) {
+                const balance = await getBalanceOf({ library })
+                setBalanceOf(balance.toNumber())
+            }
+        }
+        get()
+    }, [library])
 
     return (
         <div className="flex flex-col md:flex-row h-full overflow-scroll">
@@ -141,8 +167,9 @@ export function PathResult() {
                 <ForceGraph fromToData={fromExtToData || fromToData} from={from} to={to} />
             </div>
             <div className="flex flex-col w-full md:w-1/2 items-center justify-center mt-24 md:mt-12">
-                <div class="bg-white items-center rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700 m-1 px-12 py-6">
-                    <div className="text-xl mt-2 mb-3">
+                <div class="bg-white items-center rounded-lg md:border md:border-gray-200 md:shadow-md dark:bg-gray-800 dark:border-gray-700 m-1 px-12 py-6">
+
+                    {isVitalik && <div className="text-xl mt-2 mb-3">
                         {
                             fromToData.hasOwnProperty('nodes') && fromToData?.nodes.length > 0 && (
                                 <h1 className="text-center mb-2 text-xl">
@@ -161,9 +188,9 @@ export function PathResult() {
                                 </h1>
                             )
                         }
-                    </div>
+                    </div>}
 
-                    <div className="nft-template w-[300px] mx-auto border">
+                    {isVitalik && <div className="nft-template w-[300px] mx-auto border">
                         {
                             fromToData.hasOwnProperty('nodes') && fromToData?.nodes.length > 0 && (
                                 <img src={BRO}></img>
@@ -175,16 +202,18 @@ export function PathResult() {
                             )
                         }
 
-                    </div>
+                    </div>}
 
-                    <div class="flex flex-col">
-                        <button
-                            onClick={execute}
-                            className="mt-6 inline-flex items-center justify-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                            Mint SBT
-                            <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                        </button>
-                    </div>
+                    {
+                        isVitalik && balanceOf === 0 && (<div class="flex flex-col">
+                            <button
+                                onClick={execute}
+                                className="mt-6 inline-flex items-center justify-center py-2 px-3 text-sm font-medium text-center text-white bg-blue-400 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                Mint SBT
+                                <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                            </button>
+                        </div>)
+                    }
 
                     {
                         fromToData.hasOwnProperty('nodes') && fromToData?.nodes.length > 0 && (
@@ -196,6 +225,24 @@ export function PathResult() {
                             </div>
                         )
                     }
+                    {
+                        balanceOf > 0 && (
+                            <div class="flex flex-col">
+                                <button
+                                    className="cursor-not-allowed mt-6 inline-flex items-center justify-center py-2 px-3 text-sm font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                    SBT already minted
+                                    <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                </button>
+                            </div>
+                        )
+                    }
+
+                    {
+                        fromToData.hasOwnProperty('nodes') && fromToData?.nodes.length === 0 && (
+                            <div class="flex flex-col mt-3">
+                                No pathes
+                            </div>
+                        )}
                 </div>
             </div>
 

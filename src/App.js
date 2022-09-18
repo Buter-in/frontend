@@ -11,7 +11,6 @@ function App() {
   return (
     <Router>
       <div className="App">
-        {/* {Web3(Header, {})} */}
         <Web3>
           <Header />
           <Routes>

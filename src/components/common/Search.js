@@ -33,7 +33,7 @@ export function Search() {
     if (searchTo.endsWith(".eth")) {
       addressTo = await resolveName(searchTo);
     } else {
-      addressFrom = searchFrom;
+      addressTo = searchTo;
     }
     console.log("addressFrom", addressFrom);
     console.log("addressTo", addressTo);
@@ -44,7 +44,7 @@ export function Search() {
 
   return (
     <div className="w-full flex flex-col items-center justify-center">
-      <h1 className="text-center mb-2 text-xl" style={{color: mainColor}}>You can find path from anyone to anyone</h1>
+      <h1 className="text-center mb-2 text-xl" style={{ color: mainColor }}>You can find path from anyone to anyone</h1>
       <div className="flex flex-row m-2 items-center">
         <div className="mr-3">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -52,7 +52,7 @@ export function Search() {
           </svg>
         </div>
         <div>
-          If you want to find the way <i>from your wallet</i>, <br></br>then connect it or insert the address
+          If you want to find the way <i>from your wallet</i>, <br className="md:flex hidden"></br>then connect it or insert the address
         </div>
       </div>
 
@@ -66,7 +66,9 @@ export function Search() {
             </svg>
 
           </div>
-          <input type="search" value={searchFrom} onChange={(e) => { setSearchFrom(e.target.value) }} placeholder="[From] address / ENS" class="border-b-2 w-full border-gray-200 py-3 focus:outline-0"></input>
+          <div className="flex w-full self-start">
+            <input value={searchFrom} onChange={(e) => { setSearchFrom(e.target.value) }} placeholder="[From] address / ENS" class="border-b-2 w-full border-gray-200 py-3 focus:outline-0"></input>
+          </div>
         </div>
 
         <div className="flex items-center">
@@ -85,7 +87,7 @@ export function Search() {
             </svg>
 
           </div>
-          <input type="search" value={searchTo} onChange={(e) => { setSearchTo(e.target.value) }} placeholder="[To] address / ENS" class="border-b-2 w-full border-gray-200 py-3 focus:outline-0"></input>
+          <input value={searchTo} onChange={(e) => { setSearchTo(e.target.value) }} placeholder="[To] address / ENS" class="border-b-2 w-full border-gray-200 py-3 focus:outline-0"></input>
         </div>
 
         <div className="flex items-center justify-center p-4">
