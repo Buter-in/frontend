@@ -1,4 +1,7 @@
 import axios from 'axios'
+import axiosRetry from 'axios-retry';
+
+axiosRetry(axios, { retries: 5 });
 
 const TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYzYzZjQ4NmUtNzg3Yi00ZTNlLWI1YTMtNjE2MzFhZmZlNmU0IiwiYXVkIjpbImZhc3RhcGktdXNlcnM6YXV0aCIsImZhc3RhcGktdXNlcnM6dmVyaWZ5Il19.aksYMPh_YpZONn-EB2omwbPqtNxDOcv9F4dbG_5erAM'
 
