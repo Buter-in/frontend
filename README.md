@@ -1,6 +1,6 @@
 # Buter-in frontend
 
-Run for testing
+Run debug mode inside docker
 ```
-npm run start
+make run
 ```
