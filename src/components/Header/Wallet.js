@@ -15,19 +15,14 @@ export function Wallet() {
         setIsOpen(true)
     }
 
-    const netwotkMapping = {
-        'homestad': 'Eth Mainnet',
+    const networkMapping = {
+        'homestead': 'Eth Mainnet',
         'bnbt': 'BSC Testnet',
         'maticmum': 'Matic Testnet',
     }
 
     return (
         <>
-            {/* <Menu as="div" className="relative inline-block text-left pr-2">
-                <Menu.Button className="inline-flex justify-center w-full rounded-xl shadow-sm py-2 px-4 bg-white text-gray-800 hover:bg-gray-50 focus:outline-none">
-
-                </Menu.Button>
-            </Menu> */}
             <div className="flex space-x-1 rounded-xl bg-blue-900/20 p-1 self-start">
                 <button onClick={openModal} className='w-full px-2 rounded-lg py-2.5 text-sm font-medium leading-5 text-blue-700 ring-white ring-opacity-60 ring-offset-2 ring-offset-blue-400 focus:outline-none focus:ring-2 bg-white shadow'>
                     <div className="flex flex-row items-center">
@@ -36,7 +31,7 @@ export function Wallet() {
                         </span>
                         {!!account && (
                             <span className="text-gray-500 text-sm font-semibold">
-                                {truncateAddress(account, 5).replace('x', '×')} | {netwotkMapping[network?.name] || 'unsupported'}
+                                {truncateAddress(account, 5).replace('x', '×')} | {networkMapping[network?.name] || 'unsupported'}
                             </span>
                         )}
                         {!account && (
@@ -78,6 +73,24 @@ export function Wallet() {
                                         as="h3"
                                         className="text-lg font-medium leading-6 text-gray-900"
                                     >
+                                        <div>
+                                            Deployed chains:
+                                            <br></br>
+                                            <ul className="text-sm text-blue-300 my-3">
+                                                <li className="flex flex-row">
+                                                    <a href={'https://mumbai.polygonscan.com/address/0x9fc7cbe0aebb56d1a9f01a79ecfa3c32032021ae'}>Matic testnet</a>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 ml-1">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                                                    </svg>
+                                                </li>
+                                                <li className="flex flex-row">
+                                                    <a href={'https://etherscan.io/address/0xacb6693625712cc47c318d5b5c0c0050b1b873e1'}>Eth mainnet</a>
+                                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-3 h-3 ml-1">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 19.5l15-15m0 0H8.25m11.25 0v11.25" />
+                                                    </svg>
+                                                </li>
+                                            </ul>
+                                        </div>
                                         {!!account && (
                                             <div>
                                                 <div className="border rounded-xl p-4">
@@ -129,7 +142,7 @@ export function Wallet() {
                                         </button>)}
 
                                         <button
-                                        onClick={closeModal}
+                                            onClick={closeModal}
                                             type="button"
                                             className="mt-3 inline-flex justify-center rounded-md border border-transparent bg-blue-100 px-4 py-2 text-sm font-medium text-blue-900 hover:bg-blue-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
                                         >
