@@ -20,7 +20,8 @@ const dropDuplicates = (arr) => {
 
 export function PathResult() {
     const [confetti, setConfetti] = useState(false);
-    const { from, to } = useParams()
+    const [isLoading, setIsLoading] = useState(true);
+    const { from, to, exclude } = useParams()
     const { width, height } = useWindowSize()
     const [isOpen, setIsOpen] = useState(false)
     const { account, library } = useContext(Web3Context)
@@ -109,6 +110,7 @@ export function PathResult() {
                 const rawNodes = await getNodes({
                     src: from,
                     dst: to,
+                    exclude_contracts: exclude == 'exclude_contracts' ? true : false,
                 });
                 nodes = rawNodes.map((node) => {
                     return { id: node.node_from, type: 'main' }
@@ -129,7 +131,7 @@ export function PathResult() {
             }
 
             setFromToData({ nodes: dropDuplicates(nodes), links })
-
+            setIsLoading(false)
             // EXT
             let extNodes = JSON.parse(JSON.stringify(nodes));
             let extLinks = JSON.parse(JSON.stringify(links));
@@ -225,7 +227,6 @@ export function PathResult() {
                                 <img src={NEWB}></img>
                             )
                         }
-
                     </div>}
 
                     {
@@ -253,16 +254,16 @@ export function PathResult() {
                         balanceOf > 0 && (
                             <div class="flex flex-col">
                                 <a href={`https://etherscan.io/address/${account}`} target={'_blank'}>
-                                <button
-                                    className="mt-6 inline-flex items-center justify-center py-2 px-3 text-sm font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-                                    SBT minted | View on etherscan
-                                    <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
-                                </button>
+                                    <button
+                                        className="mt-6 inline-flex items-center justify-center py-2 px-3 text-sm font-medium text-center text-white bg-gray-400 rounded-lg hover:bg-gray-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                        SBT minted | View on etherscan
+                                        <svg aria-hidden="true" class="ml-2 -mr-1 w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+                                    </button>
                                 </a>
                             </div>
                         )
                     }
-
+                    {isLoading}
                     {
                         fromToData.hasOwnProperty('nodes') && fromToData?.nodes.length === 0 && (
                             <div class="flex flex-col mt-3">

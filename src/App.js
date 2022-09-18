@@ -15,7 +15,7 @@ function App() {
           <Header />
           <Routes>
             <Route path="/" element={<PathSearch />} />
-            <Route path="/:from/:to" element={<PathResult />} />
+            <Route path="/:from/:to/:exclude" element={<PathResult />} />
           </Routes>
           <ToastContainer hideProgressBar={true}/>
         </Web3>

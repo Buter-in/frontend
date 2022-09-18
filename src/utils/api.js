@@ -5,18 +5,20 @@ axiosRetry(axios, { retries: 5 });
 
 const TOKEN = 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoiYzYzZjQ4NmUtNzg3Yi00ZTNlLWI1YTMtNjE2MzFhZmZlNmU0IiwiYXVkIjpbImZhc3RhcGktdXNlcnM6YXV0aCIsImZhc3RhcGktdXNlcnM6dmVyaWZ5Il19.aksYMPh_YpZONn-EB2omwbPqtNxDOcv9F4dbG_5erAM'
 
-const getNodes = async ({ src, dst }) => {
+const getNodes = async ({ src, dst, exclude_contracts }) => {
 
     const payload = {
         "src": src,
         "dst": dst,
-        "exclude_contracts": true,
+        "exclude_contracts": exclude_contracts,
     }
     const config = {
         headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`
-    }}
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${TOKEN}`
+        },
+        timeout: 3000
+    }
     let res = await axios.post('https://api.quantor.me/v1/eth/graph/fraud/shortest_path', payload, config)
     return res.data
 }
@@ -27,9 +29,11 @@ const getNeibors = async ({ address }) => {
     }
     const config = {
         headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${TOKEN}`
-    }}
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${TOKEN}`
+        },
+        timeout: 3000
+    }
     let res = await axios.post('https://api.quantor.me/v1/eth/graph/fraud/bfs_nodes', payload, config)
     return res.data.map((item) => {
         return {

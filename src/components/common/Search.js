@@ -6,10 +6,15 @@ import { defaultFromAddress, defaultToAddress } from "../../constants";
 import { mainColor } from "../../constants";
 
 export function Search() {
+  const navigate = useNavigate();
   const { account, library } = useContext(Web3Context)
   const [searchFrom, setSearchFrom] = useState(defaultFromAddress);
   const [searchTo, setSearchTo] = useState(defaultToAddress);
-  const navigate = useNavigate();
+  const [checked, setChecked] = useState(true);
+
+  const handleChange = () => {
+    setChecked(!checked);
+  };
 
   useEffect(() => {
     if (account) {
@@ -17,7 +22,6 @@ export function Search() {
     } else {
       setSearchFrom(defaultFromAddress)
     }
-    console.log('????????')
   }, [account])
 
   const search = async () => {
@@ -39,7 +43,7 @@ export function Search() {
     console.log("addressTo", addressTo);
 
 
-    navigate(`/${addressFrom.toLowerCase()}/${addressTo.toLowerCase()}`);
+    navigate(`/${addressFrom.toLowerCase()}/${addressTo.toLowerCase()}/${checked ? 'exclude_contracts' : 'not_exclude_contracts'}`);
   };
 
   return (
@@ -88,6 +92,11 @@ export function Search() {
 
           </div>
           <input value={searchTo} onChange={(e) => { setSearchTo(e.target.value) }} placeholder="[To] address / ENS" class="border-b-2 w-full border-gray-200 py-3 focus:outline-0"></input>
+        </div>
+
+        <div class="flex items-center pt-4 mb-4">
+          <input id="default-checkbox" type="checkbox" checked={checked} onChange={handleChange} class="w-4 h-4 text-blue-600 bg-gray-100 rounded border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"></input>
+          <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">Exclude contracts</label>
         </div>
 
         <div className="flex items-center justify-center p-4">
